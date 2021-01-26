@@ -29,7 +29,7 @@ def calculate_date():
         date = randint(1, 31)
 
 def is_valid_date(date):
-    if re.match("^(\d{2}\/){2}\d{4}$", date) != None:
+    if re.match(r"^(\d{2}\/){2}\d{4}$", date) != None:
         pass
     else:
         return False
@@ -51,6 +51,9 @@ def calculate_doomsday(day, month, year):
     year_modulo = year_no_century % 12
     final_num = year_modulo // 4
     final_num = final_num % 7
-    print(days_of_week[(century_code + year_code + year_modulo + final_num) % 7])
+    doomsday = (century_code + year_code + year_modulo + final_num) % 7
 
-calculate_doomsday(0, 0, 2020)
+    if month == 1:
+        print(days_of_week[doomsday - ((3 - day) % 7)])
+
+calculate_doomsday(31, 1, 2021)
