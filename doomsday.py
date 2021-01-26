@@ -33,3 +33,24 @@ def is_valid_date(date):
         pass
     else:
         return False
+
+def calculate_doomsday(day, month, year):
+    century_code = int(str(year)[0:2])  
+    if (century_code - 18) % 4 == 0:
+	    century_code = 5
+    elif (century_code - 19) % 4 == 0:
+	    century_code = 3
+    elif (century_code - 20) % 4 == 0:
+	    century_code = 2
+    else:
+	    century_code = 0
+
+
+    year_no_century = int(str(year)[2:])
+    year_code = year_no_century  // 12
+    year_modulo = year_no_century % 12
+    final_num = year_modulo // 4
+    final_num = final_num % 7
+    print(days_of_week[(century_code + year_code + year_modulo + final_num) % 7])
+
+calculate_doomsday(0, 0, 2020)
