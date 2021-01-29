@@ -30,27 +30,31 @@ def calculate_date():
 
 def is_valid_date(date):
     if re.match(r"^(\d{2}\/){2}\d{4}$", date) != None:
-        pass
+        #pass
+        return True
     else:
         return False
 
 def get_user_date():
     date = input("Enter date (dd/mm/yyyy): ")
+    print(is_valid_date(date))
     date = date.split('/')
     date = [int(x) for x in date]
     return date
 
-def calculate_doomsday(day, month, year):
+def calculate_century_code(year):
     century_code = int(str(year)[0:2])  
     if (century_code - 18) % 4 == 0:
-	    century_code = 5
+	    return 5
     elif (century_code - 19) % 4 == 0:
-	    century_code = 3
+	    return 3
     elif (century_code - 20) % 4 == 0:
-	    century_code = 2
+	    return 2
     else:
-	    century_code = 0
+	    return 0
 
+def calculate_doomsday(day, month, year):
+    century_code = calculate_century_code(year)
     year_no_century = int(str(year)[2:])
     year_code = year_no_century  // 12
     year_modulo = year_no_century % 12
@@ -60,34 +64,36 @@ def calculate_doomsday(day, month, year):
 
     if month == 1:
         if is_leap_year(year):
-            print(days_of_week[doomsday - ((4 - day) % 7)])
+            doomsday_anchor = 4 
         else:
-            print(days_of_week[doomsday - ((3 - day) % 7)])
+            doomsday_anchor = 3 
     if month == 2:
         if is_leap_year(year):
-            print(days_of_week[doomsday - ((29 - day) % 7)])
+            doomsday_anchor = 29 
         else:
-            print(days_of_week[doomsday - ((28 - day) % 7)])
+            doomsday_anchor = 28 
     if month == 3:
-        print(days_of_week[doomsday - ((14 - day) % 7)])
+        doomsday_anchor = 14 
     if month == 4:
-        print(days_of_week[doomsday - ((4 - day) % 7)])
+        doomsday_anchor = 4 
     if month == 5:
-        print(days_of_week[doomsday - ((9 - day) % 7)])
+        doomsday_anchor = 9 
     if month == 6:
-        print(days_of_week[doomsday - ((6 - day) % 7)])
+        doomsday_anchor = 6 
     if month == 7:
-        print(days_of_week[doomsday - ((11 - day) % 7)])
+        doomsday_anchor = 11 
     if month == 8:
-        print(days_of_week[doomsday - ((8 - day) % 7)])
+        doomsday_anchor = 8 
     if month == 9:
-        print(days_of_week[doomsday - ((11 - day) % 7)])
+        doomsday_anchor = 11 
     if month == 10:
-        print(days_of_week[doomsday - ((10 - day) % 7)])
+        doomsday_anchor = 10 
     if month == 11:
-        print(days_of_week[doomsday - ((7 - day) % 7)])
+        doomsday_anchor = 7 
     if month == 12:
-        print(days_of_week[doomsday - ((12 - day) % 7)])
+        doomsday_anchor = 12 
+    
+    print(days_of_week[doomsday - ((doomsday_anchor - day) % 7)])
 
 if __name__ == '__main__':
     calculate_doomsday(*get_user_date())
