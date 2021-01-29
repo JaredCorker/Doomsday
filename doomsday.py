@@ -16,7 +16,7 @@ def is_leap_year(year):
         return False
 
 def calculate_date():
-    year = randint(1000, 9999)
+    year = randint(1000, 2999)
     month = randint(1, 12)
     if month == 2:
         if is_leap_year(year):
@@ -27,6 +27,7 @@ def calculate_date():
         date = randint(1, 30)
     else:
         date = randint(1, 31)
+    return str(date) + "/" + str(month) + "/" + str(year)
 
 def is_valid_date(date):
     if re.match(r"^(\d{2}\/){2}\d{4}$", date) != None:
@@ -71,7 +72,7 @@ def calculate_doomsday(day, month, year):
         if is_leap_year(year):
             doomsday_anchor = 29 
         else:
-            doomsday_anchor = 28 
+            doomsday_anchor = 28
     if month == 3:
         doomsday_anchor = 14 
     if month == 4:
@@ -93,7 +94,21 @@ def calculate_doomsday(day, month, year):
     if month == 12:
         doomsday_anchor = 12 
     
-    print(days_of_week[doomsday - ((doomsday_anchor - day) % 7)])
+    #print(days_of_week[doomsday - ((doomsday_anchor - day) % 7)])
+    return days_of_week[doomsday - ((doomsday_anchor - day) % 7)]
 
 if __name__ == '__main__':
-    calculate_doomsday(*get_user_date())
+    user_choice = input("1) Find out day 2) Test: ")
+    if user_choice == "1":
+        calculate_doomsday(*get_user_date())
+    if user_choice == "2":
+        date = calculate_date()
+        date = date.split('/')
+        date = [int(x) for x in date]
+        doomsday = calculate_doomsday(*date)
+        print(date)
+        user_guess = input()
+        if user_guess == doomsday:
+            print("correct!")
+        else:
+            print("wrong!")
