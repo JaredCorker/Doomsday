@@ -1,5 +1,6 @@
 from random import randint
 import re
+import time
 
 days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
@@ -107,8 +108,12 @@ if __name__ == '__main__':
         date = [int(x) for x in date]
         doomsday = calculate_doomsday(*date)
         print(date)
+        start = time.time()
         user_guess = input()
+        end = time.time()
         if user_guess == doomsday:
             print("correct!")
         else:
             print("wrong!")
+            print("the day was " + doomsday)
+        print("time: " + str(end - start))
