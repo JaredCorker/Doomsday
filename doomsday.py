@@ -4,23 +4,11 @@ import time
 
 days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-def is_leap_year(year):
-    if year % 4 == 0:
-        if year % 100 == 0:
-            if year % 400 == 0:
-                return True
-            else:
-                return False
-        else:
-            return True
-    else:
-        return False
-
 def calculate_date():
     year = randint(1000, 2999)
     month = randint(1, 12)
     if month == 2:
-        if is_leap_year(year):
+        if isleap(year):
             date = randint(1, 29)
         else:
             date = randint(1, 28)
@@ -65,12 +53,12 @@ def calculate_doomsday(day, month, year):
     doomsday = (century_code + year_code + year_modulo + final_num) % 7
 
     if month == 1:
-        if is_leap_year(year):
+        if isleap(year):
             doomsday_anchor = 4 
         else:
             doomsday_anchor = 3 
     if month == 2:
-        if is_leap_year(year):
+        if isleap(year):
             doomsday_anchor = 29 
         else:
             doomsday_anchor = 28
