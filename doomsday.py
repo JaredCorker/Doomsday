@@ -5,44 +5,60 @@ from calendar import isleap
 
 days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
-def calculate_date():
-    year = randint(1000, 2999)
-    month = randint(1, 12)
-    if month == 2:
-        if isleap(year):
-            date = randint(1, 29)
+class Doomsday():
+    def __init__(self, day=None, month=None, year=None):
+        self.year = year if year is not None else randint(1000, 2999)
+
+        self.month = month if month is not None else randint(1, 12)
+
+        if day != None:
+            self.day = day
         else:
-            date = randint(1, 28)
-    elif month in {4, 6, 9, 11}:
-        date = randint(1, 30)
-    else:
-        date = randint(1, 31)
-    return str(date) + "/" + str(month) + "/" + str(year)
+            if month == 2:
+                if isleap(self.year):
+                    self.day = randint(1, 29)
+                else:
+                    self.day = randint(1, 28)
+            elif month in {4, 6, 9, 11}:
+                self.day = randint(1, 30)
+            else:
+                self.day = randint(1, 31)
+
+        century = int(str(year)[0:2])  
+        if (century - 18) % 4 == 0:
+	        self.century_code = 5
+        elif (century - 19) % 4 == 0:
+	        self.century_code = 3
+        elif (century - 20) % 4 == 0:
+	        self.century_code = 2
+        else:
+	        self.century_code = 0
+
 
 def is_valid_date(date):
     if re.match(r"^(\d{2}\/){2}\d{4}$", date) != None:
-        #pass
-        return True
+        date = date.split('/')
+        day, month, year = [int(x) for x in date]
+        if month == 2:
+            if isleap(year):
+                return 1 <= day <= 29 
+            else:
+                return 1 <= day <= 28 
+        elif month in {4, 6, 9, 11}:
+            return 1 <= day <= 30 
+        else:
+            return 1 <= day <= 31
     else:
         return False
 
 def get_user_date():
     date = input("Enter date (dd/mm/yyyy): ")
-    print(is_valid_date(date))
-    date = date.split('/')
-    date = [int(x) for x in date]
-    return date
-
-def calculate_century_code(year):
-    century_code = int(str(year)[0:2])  
-    if (century_code - 18) % 4 == 0:
-	    return 5
-    elif (century_code - 19) % 4 == 0:
-	    return 3
-    elif (century_code - 20) % 4 == 0:
-	    return 2
+    if is_valid_date(date):
+        date = date.split('/')
+        date = [int(x) for x in date]
+        return date
     else:
-	    return 0
+        print("Not a valid date.")
 
 def calculate_doomsday(day, month, year):
     century_code = calculate_century_code(year)
