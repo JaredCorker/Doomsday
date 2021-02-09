@@ -123,26 +123,28 @@ def generate_random_date():
     return day, month, year
 
 if __name__ == '__main__':
-    user_choice = input("1) Find out day 2) Test: ")
-    if user_choice == "1":
-        calculate_doomsday(*get_user_date())
-    if user_choice == "2":
-        date = generate_random_date()
-        doomsday = calculate_doomsday(*date)
-        print(date)
-        print("0) Sunday")
-        print("1) Monday")
-        print("2) Tuesday")
-        print("3) Wednesday")
-        print("4) Thursday")
-        print("5) Friday")
-        print("6) Saturday")
-        start = time.time()
-        user_guess = input()
-        end = time.time()
-        if days_of_week[int(user_guess)] == doomsday:
-            print("correct!")
-        else:
-            print("wrong!")
-            print("the day was " + doomsday)
-        print("time: " + str(end - start))
+    user_choice = input("1) Find out day 2) Test q) Quit:")
+    while user_choice != 'q':
+        if user_choice == "1":
+            print(calculate_doomsday(*get_user_date()))
+        if user_choice == "2":
+            date = generate_random_date()
+            doomsday = calculate_doomsday(*date)
+            print(date)
+            print("0) Sunday")
+            print("1) Monday")
+            print("2) Tuesday")
+            print("3) Wednesday")
+            print("4) Thursday")
+            print("5) Friday")
+            print("6) Saturday")
+            start = time.time()
+            user_guess = input()
+            end = time.time()
+            if days_of_week[int(user_guess)] == doomsday:
+                print("correct!")
+            else:
+                print("wrong!")
+                print("the day was " + doomsday)
+            print("time: " + str(end - start))
+        user_choice = input("1) Find out day 2) Test q) Quit:")
