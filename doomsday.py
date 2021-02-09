@@ -130,10 +130,17 @@ if __name__ == '__main__':
         date = generate_random_date()
         doomsday = calculate_doomsday(*date)
         print(date)
+        print("0) Sunday")
+        print("1) Monday")
+        print("2) Tuesday")
+        print("3) Wednesday")
+        print("4) Thursday")
+        print("5) Friday")
+        print("6) Saturday")
         start = time.time()
         user_guess = input()
         end = time.time()
-        if user_guess == doomsday:
+        if days_of_week[int(user_guess)] == doomsday:
             print("correct!")
         else:
             print("wrong!")
