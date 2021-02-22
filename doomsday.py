@@ -1,6 +1,6 @@
 from random import randint
 import re
-import time
+from time import time
 from calendar import isleap
 
 days_of_week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -123,7 +123,9 @@ def generate_random_date():
     return day, month, year
 
 if __name__ == '__main__':
-    user_choice = input("1) Find out day 2) Test q) Quit:")
+    times_array = []
+    best_time = 0
+    user_choice = input("1) Find out day\n2) Test\nq) Quit\n: ")
     while user_choice != 'q':
         if user_choice == "1":
             print(calculate_doomsday(*get_user_date()))
@@ -138,13 +140,24 @@ if __name__ == '__main__':
             print("4) Thursday")
             print("5) Friday")
             print("6) Saturday")
-            start = time.time()
-            user_guess = input()
-            end = time.time()
-            if days_of_week[int(user_guess)] == doomsday:
-                print("correct!")
+
+            start_time = time()
+            user_guess = input(": ")
+            while days_of_week[int(user_guess)] != doomsday:
+                print("Incorrect, try again.")
+                user_guess = input(": ")
+            end_time = time()
+            final_time = end_time - start_time
+            print("Time: {:.2f} seconds".format(end_time - start_time))
+            times_array.append(final_time)
+            average_time = sum(times_array) / len(times_array)
+            print("Average time: {:.2f} seconds".format(average_time))
+            if best_time != 0:
+                if final_time < best_time:
+                    print("New best time! Beat previous best by {:.2f} seconds".format(best_time - final_time))
+                    best_time = final_time
             else:
-                print("wrong!")
-                print("the day was " + doomsday)
-            print("time: " + str(end - start))
-        user_choice = input("1) Find out day 2) Test q) Quit:")
+                print("Best time: {:.2f} seconds".format(final_time))
+                best_time = final_time
+
+        user_choice = input("1) Find out day\n2) Test\nq) Quit\n: ")
